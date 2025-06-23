@@ -1,7 +1,6 @@
 # BizPilot: Financial Accounting ERP (MVP)
 
-**BizPilot** is an offline-first, lightweight financial accounting ERP designed for small and medium-sized businesses.  
-It helps business owners stay in control of their money — without needing complex spreadsheets or internet access.
+**BizPilot** it is an offline-first, lightweight financial accounting tool designed for small and medium-sized businesses.  
 
 ---
 
