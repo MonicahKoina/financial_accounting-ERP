@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import Card from "antd/es/card/Card";
+import { Button, Input } from "antd";
 function GoodsReceived() {
   const [supplier, setSupplier] = useState("");
   const [dateReceived, setDateReceived] = useState("");
@@ -30,73 +31,103 @@ function GoodsReceived() {
   }
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="supplier">Supplier's name</label>
-        <input
-          type="text"
-          id="supplier"
-          value={supplier}
-          onChange={(e) => setSupplier(e.target.value)}
-          placeholder="e.g. Monicah"
-        />
-        <label htmlFor="date">Date suplied </label>
-        <input
-          type="date"
-          id="date"
-          value={dateReceived}
-          onChange={(e) => setDateReceived(e.target.value)}
-          placeholder="Date you received the goods"
-        />
-        <div>
-          <h3>Item description</h3>
+      <Card>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 w-full md:w-1/2 md:mx-auto"
+        >
           <div>
-            <label htmlFor="itemName">item Name</label>
-            <input
+            <h3 className="my-4 font-extrabold text-3xl text-amber-600">
+              ADD STOCK
+            </h3>
+            <label htmlFor="supplier" className="font-bold text-amber-800 ">
+              Supplier's name
+            </label>
+            <Input
               type="text"
-              value={currentItem.name}
-              onChange={(e) =>
-                setCurrentItem({ ...currentItem, name: e.target.value })
-              }
-              id="itemName"
-              placeholder="e.g. Hanan tissue"
+              id="supplier"
+              value={supplier}
+              onChange={(e) => setSupplier(e.target.value)}
+              placeholder="e.g. Monicah"
             />
-            <label htmlFor="itemQuantity">Quantity</label>
-            <input
-              type="text"
-              value={currentItem.quantity}
-              onChange={(e) =>
-                setCurrentItem({ ...currentItem, quantity: e.target.value })
-              }
-              id="itemQuantity"
-              placeholder="e.g. 20 rolls"
-            />
-            <label htmlFor="category">Category</label>
-            <input
-              type="text"
-              value={currentItem.category}
-              onChange={(e) =>
-                setCurrentItem({ ...currentItem, category: e.target.value })
-              }
-              id="category"
-              placeholder="e.g. sugar, maize flour etc"
-            />
-            <label htmlFor="buyingPrice">Buying price</label>
-            <input
-              type="number"
-              value={currentItem.price}
-              onChange={(e) =>
-                setCurrentItem({ ...currentItem, price: e.target.value })
-              }
-              id="buyingPrice"
+            <label htmlFor="date" className="font-bold text-amber-800 ">
+              Date suplied{" "}
+            </label>
+            <Input
+              type="date"
+              id="date"
+              value={dateReceived}
+              onChange={(e) => setDateReceived(e.target.value)}
+              placeholder="Date you received the goods"
             />
           </div>
-        </div>
-        <button type="button" onClick={handleAddItem}>
-          + Add another item
-        </button>
 
-        <button type="submit">Save goods received</button>
-      </form>
+          <div>
+            <h3 className="my-4 font-extrabold text-3xl text-amber-600">
+              Item description
+            </h3>
+            <div>
+              <label htmlFor="itemName" className="font-bold text-amber-800">
+                item Name
+              </label>
+              <Input
+                type="text"
+                value={currentItem.name}
+                onChange={(e) =>
+                  setCurrentItem({ ...currentItem, name: e.target.value })
+                }
+                id="itemName"
+                placeholder="e.g. Hanan tissue"
+              />
+              <label
+                htmlFor="itemQuantity"
+                className="font-bold  text-amber-800"
+              >
+                Quantity
+              </label>
+              <Input
+                type="text"
+                value={currentItem.quantity}
+                onChange={(e) =>
+                  setCurrentItem({ ...currentItem, quantity: e.target.value })
+                }
+                id="itemQuantity"
+                placeholder="e.g. 20 rolls"
+              />
+              <label htmlFor="category" className="font-bold  text-amber-800">
+                Category
+              </label>
+              <Input
+                type="text"
+                value={currentItem.category}
+                onChange={(e) =>
+                  setCurrentItem({ ...currentItem, category: e.target.value })
+                }
+                id="category"
+                placeholder="e.g. sugar, maize flour etc"
+              />
+              <label htmlFor="buyingPrice" className="font-bold text-amber-800">
+                Buying price
+              </label>
+              <Input
+                type="number"
+                value={currentItem.price}
+                onChange={(e) =>
+                  setCurrentItem({ ...currentItem, price: e.target.value })
+                }
+                id="buyingPrice"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center gap-4">
+            <Button type="dashed" onClick={handleAddItem}>
+              + Add another item
+            </Button>
+
+            <Button type="primary">Save goods received</Button>
+          </div>
+        </form>
+      </Card>
     </div>
   );
 }
