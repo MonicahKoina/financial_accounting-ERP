@@ -4,7 +4,6 @@ import { Button, Input } from "antd";
 function GoodsReceived() {
   const [supplier, setSupplier] = useState("");
   const [dateReceived, setDateReceived] = useState("");
-  const [items, setItems] = useState([]);
   const [currentItem, setCurrentItem] = useState({
     name: "",
     quantity: "",
@@ -12,7 +11,6 @@ function GoodsReceived() {
     price: "",
   });
   function handleAddItem() {
-    setItems([...items, currentItem]);
     setCurrentItem({
       name: "",
       quantity: "",
@@ -25,22 +23,16 @@ function GoodsReceived() {
     const data = {
       supplier,
       dateReceived,
-      items,
     };
     console.log(data);
   }
   return (
-    <div>
-      <Card>
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-4 w-full md:w-1/2 md:mx-auto"
-        >
+    <div className="flex justify-center mt-10 ">
+      <Card className="w-full md:w-1/2 md:mx-10">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full  ">
           <div>
-            <h3 className="my-4 font-extrabold text-3xl text-amber-600">
-              ADD STOCK
-            </h3>
-            <label htmlFor="supplier" className="font-bold text-amber-800 ">
+            <h3 className="my-4 font-extrabold text-3xl">ADD STOCK</h3>
+            <label htmlFor="supplier" className="font-bold  ">
               Supplier's name
             </label>
             <Input
@@ -50,7 +42,7 @@ function GoodsReceived() {
               onChange={(e) => setSupplier(e.target.value)}
               placeholder="e.g. Monicah"
             />
-            <label htmlFor="date" className="font-bold text-amber-800 ">
+            <label htmlFor="date" className="font-bold ">
               Date suplied{" "}
             </label>
             <Input
@@ -63,11 +55,9 @@ function GoodsReceived() {
           </div>
 
           <div>
-            <h3 className="my-4 font-extrabold text-3xl text-amber-600">
-              Item description
-            </h3>
+            <h3 className="my-4 font-extrabold text-3xl ">Item description</h3>
             <div>
-              <label htmlFor="itemName" className="font-bold text-amber-800">
+              <label htmlFor="itemName" className="font-bold ">
                 item Name
               </label>
               <Input
@@ -79,10 +69,7 @@ function GoodsReceived() {
                 id="itemName"
                 placeholder="e.g. Hanan tissue"
               />
-              <label
-                htmlFor="itemQuantity"
-                className="font-bold  text-amber-800"
-              >
+              <label htmlFor="itemQuantity" className="font-bold  ">
                 Quantity
               </label>
               <Input
@@ -94,7 +81,7 @@ function GoodsReceived() {
                 id="itemQuantity"
                 placeholder="e.g. 20 rolls"
               />
-              <label htmlFor="category" className="font-bold  text-amber-800">
+              <label htmlFor="category" className="font-bold  ">
                 Category
               </label>
               <Input
@@ -106,7 +93,7 @@ function GoodsReceived() {
                 id="category"
                 placeholder="e.g. sugar, maize flour etc"
               />
-              <label htmlFor="buyingPrice" className="font-bold text-amber-800">
+              <label htmlFor="buyingPrice" className="font-bold ">
                 Buying price
               </label>
               <Input
@@ -120,11 +107,7 @@ function GoodsReceived() {
             </div>
           </div>
           <div className="flex flex-col justify-center gap-4">
-            <Button type="dashed" onClick={handleAddItem}>
-              + Add another item
-            </Button>
-
-            <Button type="primary">Save goods received</Button>
+            <Button type="primary">Save Good</Button>
           </div>
         </form>
       </Card>
