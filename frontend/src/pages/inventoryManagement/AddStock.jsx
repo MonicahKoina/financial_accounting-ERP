@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Card from "antd/es/card/Card";
 import { Button, Input } from "antd";
-function GoodsReceived() {
+function AddStock() {
   const [supplier, setSupplier] = useState("");
   const [dateReceived, setDateReceived] = useState("");
   const [currentItem, setCurrentItem] = useState({
@@ -10,14 +10,7 @@ function GoodsReceived() {
     category: "",
     price: "",
   });
-  function handleAddItem() {
-    setCurrentItem({
-      name: "",
-      quantity: "",
-      category: "",
-      price: "",
-    });
-  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const data = {
@@ -27,7 +20,7 @@ function GoodsReceived() {
     console.log(data);
   }
   return (
-    <div className="flex justify-center mt-10 ">
+    <div className="flex justify-center mt-4 ">
       <Card className="w-full md:w-1/2 md:mx-10">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full  ">
           <div>
@@ -115,4 +108,4 @@ function GoodsReceived() {
   );
 }
 
-export default GoodsReceived;
+export default AddStock;
