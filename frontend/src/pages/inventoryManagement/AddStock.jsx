@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Card from "antd/es/card/Card";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
+
 function AddStock() {
   const [supplier, setSupplier] = useState("");
   const [dateReceived, setDateReceived] = useState("");
@@ -13,19 +14,49 @@ function AddStock() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const data = {
+    if (
+      !supplier ||
+      !dateReceived ||
+      !currentItem.name ||
+      !currentItem.quantity ||
+      !currentItem.category ||
+      !currentItem.price
+    ) {
+      message.error("Please fill in all fields");
+      return;
+    }
+
+    const newStockEntry = {
+      id: Date.now(),
       supplier,
       dateReceived,
+      item: { ...currentItem },
     };
-    console.log(data);
+    const existingStock = JSON.parse(localStorage.getItem("stockItems")) || [];
+    const updatedStock = [...existingStock, newStockEntry];
+
+    localStorage.setItem("stockItems", JSON.stringify(updatedStock));
+    message.success("Stock saved successfully!");
+
+    setSupplier("");
+    setDateReceived("");
+    setCurrentItem({
+      name: "",
+      quantity: "",
+      category: "",
+      price: "",
+    });
+
+    console.log("Saved Stock Entry:", newStockEntry);
   }
+
   return (
-    <div className="flex justify-center mt-4 ">
+    <div className="flex justify-center mt-4">
       <Card className="w-full md:w-1/2 md:mx-10">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full  ">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           <div>
             <h3 className="my-4 font-extrabold text-3xl">ADD STOCK</h3>
-            <label htmlFor="supplier" className="font-bold  ">
+            <label htmlFor="supplier" className="font-bold">
               Supplier's name
             </label>
             <Input
@@ -35,8 +66,8 @@ function AddStock() {
               onChange={(e) => setSupplier(e.target.value)}
               placeholder="e.g. Monicah"
             />
-            <label htmlFor="date" className="font-bold ">
-              Date suplied{" "}
+            <label htmlFor="date" className="font-bold">
+              Date supplied
             </label>
             <Input
               type="date"
@@ -48,59 +79,60 @@ function AddStock() {
           </div>
 
           <div>
-            <h3 className="my-4 font-extrabold text-3xl ">Item description</h3>
-            <div>
-              <label htmlFor="itemName" className="font-bold ">
-                item Name
-              </label>
-              <Input
-                type="text"
-                value={currentItem.name}
-                onChange={(e) =>
-                  setCurrentItem({ ...currentItem, name: e.target.value })
-                }
-                id="itemName"
-                placeholder="e.g. Hanan tissue"
-              />
-              <label htmlFor="itemQuantity" className="font-bold  ">
-                Quantity
-              </label>
-              <Input
-                type="text"
-                value={currentItem.quantity}
-                onChange={(e) =>
-                  setCurrentItem({ ...currentItem, quantity: e.target.value })
-                }
-                id="itemQuantity"
-                placeholder="e.g. 20 rolls"
-              />
-              <label htmlFor="category" className="font-bold  ">
-                Category
-              </label>
-              <Input
-                type="text"
-                value={currentItem.category}
-                onChange={(e) =>
-                  setCurrentItem({ ...currentItem, category: e.target.value })
-                }
-                id="category"
-                placeholder="e.g. sugar, maize flour etc"
-              />
-              <label htmlFor="buyingPrice" className="font-bold ">
-                Buying price
-              </label>
-              <Input
-                type="number"
-                value={currentItem.price}
-                onChange={(e) =>
-                  setCurrentItem({ ...currentItem, price: e.target.value })
-                }
-                id="buyingPrice"
-              />
-            </div>
+            <h3 className="my-4 font-extrabold text-3xl">Item description</h3>
+            <label htmlFor="itemName" className="font-bold">
+              Item Name
+            </label>
+            <Input
+              type="text"
+              value={currentItem.name}
+              onChange={(e) =>
+                setCurrentItem({ ...currentItem, name: e.target.value })
+              }
+              id="itemName"
+              placeholder="e.g. Hanan tissue"
+            />
+            <label htmlFor="itemQuantity" className="font-bold">
+              Quantity
+            </label>
+            <Input
+              type="text"
+              value={currentItem.quantity}
+              onChange={(e) =>
+                setCurrentItem({ ...currentItem, quantity: e.target.value })
+              }
+              id="itemQuantity"
+              placeholder="e.g. 20 rolls"
+            />
+            <label htmlFor="category" className="font-bold">
+              Category
+            </label>
+            <Input
+              type="text"
+              value={currentItem.category}
+              onChange={(e) =>
+                setCurrentItem({ ...currentItem, category: e.target.value })
+              }
+              id="category"
+              placeholder="e.g. sugar, maize flour etc"
+            />
+            <label htmlFor="buyingPrice" className="font-bold">
+              Buying price
+            </label>
+            <Input
+              type="number"
+              value={currentItem.price}
+              onChange={(e) =>
+                setCurrentItem({ ...currentItem, price: e.target.value })
+              }
+              id="buyingPrice"
+            />
           </div>
+
           <div className="flex flex-col justify-center gap-4">
-            <Button type="primary">Save Good</Button>
+            <Button type="primary" htmlType="submit">
+              Save Good
+            </Button>
           </div>
         </form>
       </Card>
