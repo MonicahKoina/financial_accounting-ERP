@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Card from "antd/es/card/Card";
-import { Button, Input, message } from "antd";
+import { Button, Input, Select, message } from "antd";
+
+const { Option } = Select;
 
 function AddStock() {
   const [supplier, setSupplier] = useState("");
   const [dateReceived, setDateReceived] = useState("");
+  const [paymentType, setPaymentType] = useState("");
   const [currentItem, setCurrentItem] = useState({
     name: "",
     quantity: "",
@@ -17,6 +20,7 @@ function AddStock() {
     if (
       !supplier ||
       !dateReceived ||
+      !paymentType ||
       !currentItem.name ||
       !currentItem.quantity ||
       !currentItem.category ||
@@ -30,16 +34,18 @@ function AddStock() {
       id: Date.now(),
       supplier,
       dateReceived,
+      paymentType,
       item: { ...currentItem },
     };
+
     const existingStock = JSON.parse(localStorage.getItem("stockItems")) || [];
     const updatedStock = [...existingStock, newStockEntry];
 
     localStorage.setItem("stockItems", JSON.stringify(updatedStock));
     message.success("Stock saved successfully!");
-
     setSupplier("");
     setDateReceived("");
+    setPaymentType("");
     setCurrentItem({
       name: "",
       quantity: "",
@@ -56,6 +62,7 @@ function AddStock() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           <div>
             <h3 className="my-4 font-extrabold text-3xl">ADD STOCK</h3>
+
             <label htmlFor="supplier" className="font-bold">
               Supplier's name
             </label>
@@ -66,6 +73,7 @@ function AddStock() {
               onChange={(e) => setSupplier(e.target.value)}
               placeholder="e.g. Monicah"
             />
+
             <label htmlFor="date" className="font-bold">
               Date supplied
             </label>
@@ -76,10 +84,24 @@ function AddStock() {
               onChange={(e) => setDateReceived(e.target.value)}
               placeholder="Date you received the goods"
             />
+
+            <label htmlFor="paymentType" className="font-bold">
+              Payment Type
+            </label>
+            <Select
+              id="paymentType"
+              value={paymentType}
+              onChange={setPaymentType}
+              placeholder="Select payment type"
+            >
+              <Option value="Cash">Cash</Option>
+              <Option value="Credit">Credit</Option>
+            </Select>
           </div>
 
           <div>
             <h3 className="my-4 font-extrabold text-3xl">Item description</h3>
+
             <label htmlFor="itemName" className="font-bold">
               Item Name
             </label>
@@ -92,6 +114,7 @@ function AddStock() {
               id="itemName"
               placeholder="e.g. Hanan tissue"
             />
+
             <label htmlFor="itemQuantity" className="font-bold">
               Quantity
             </label>
@@ -104,6 +127,7 @@ function AddStock() {
               id="itemQuantity"
               placeholder="e.g. 20 rolls"
             />
+
             <label htmlFor="category" className="font-bold">
               Category
             </label>
@@ -116,6 +140,7 @@ function AddStock() {
               id="category"
               placeholder="e.g. sugar, maize flour etc"
             />
+
             <label htmlFor="buyingPrice" className="font-bold">
               Buying price
             </label>
