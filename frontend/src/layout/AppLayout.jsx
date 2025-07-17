@@ -1,36 +1,39 @@
 import React from "react";
 import { Layout, Menu, Breadcrumb, theme } from "antd";
-import { Outlet, useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const navItems = [
-  { key: "/", label: "Sell Goods" },
   { key: "add-stock", label: "Add Stock" },
   { key: "stock-list", label: "Stock List" },
+  { key: "sell-goods", label: "Sell Goods" },
   { key: "sales-journal", label: "Sales Journal" },
+  { key: "purchases-ledger", label: "Purchases Ledger" },
+  { key: "reconciliation", label: "Reconciliation" },
 ];
 
-const StockLayout = () => {
+const AppLayout = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const navigate = useNavigate();
-  const location = useLocation();
+
+  const handleMenuClick = (e) => {
+    navigate(`/${e.key}`);
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header style={{ display: "flex", alignItems: "center" }}>
-        <div className="text-white font-bold text-xl mr-8">BizPilot</div>
+        <div className="text-white font-bold text-xl mr-8">✈️ BizPilot</div>{" "}
         <Menu
           theme="dark"
           mode="horizontal"
-          selectedKeys={[
-            location.pathname === "/" ? "/" : location.pathname.slice(1),
-          ]}
+          defaultSelectedKeys={["dashboard"]}
           items={navItems}
-          onClick={(e) => navigate(`/${e.key === "/" ? "" : e.key}`)}
+          onClick={handleMenuClick}
           style={{ flex: 1, minWidth: 0 }}
         />
       </Header>
@@ -45,7 +48,7 @@ const StockLayout = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <Outlet />
+          {children}
         </div>
       </Content>
 
@@ -56,4 +59,4 @@ const StockLayout = () => {
   );
 };
 
-export default StockLayout;
+export default AppLayout;
